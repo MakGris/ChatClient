@@ -16,7 +16,7 @@ public:
 
 private:
     QTcpSocket *client{};
-    const int server_port = 2020;
+    const int server_port = 9999;
     QString server_address_string = "127.0.0.1";
 
 

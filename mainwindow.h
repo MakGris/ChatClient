@@ -39,6 +39,7 @@ private:
     QWidget     *mainWidget         {};
     QGridLayout *mainLayout         {};
     ProcessNetwork *processNetwork  {};
+    char* toChar(int data);
 signals:
 
 };

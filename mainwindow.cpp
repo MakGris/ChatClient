@@ -52,11 +52,19 @@ void MainWindow::on_pb_exit_clicked()
 void MainWindow::on_pb_enter_clicked()
 {
     QByteArray pack {};
-    pack.append(ProcessNetwork::package_type::auth);
-    pack.append(le_login->selectionLength());
-    pack.append(le_login->text().toUtf8());
-    pack.append(le_password->selectionLength());
-    pack.append(le_password->text().toUtf8());
+    // char intTemp[4] {};
+    // int i = ProcessNetwork::package_type::auth;
+    // memcpy(intTemp, &i, 4);
+    pack.append(toChar(static_cast <int> (ProcessNetwork::package_type::auth)), 4);
+    pack.append(toChar(le_login->text().length()), 4);
+    pack.append(le_login->text().toStdString().c_str(), le_login->text().length());
+    pack.append(toChar(le_password->text().length()),4);
+    pack.append(le_password->text().toStdString().c_str(), le_password->text().length());
+    // i = le_login->selectionLength();
+    // pack.append(le_login->selectionLength());
+    // pack.append(le_login->text().toUtf8());
+    // pack.append(le_password->selectionLength());
+    // pack.append(le_password->text().toUtf8());
     processNetwork->send_message(pack);
 
 
@@ -69,6 +77,14 @@ void MainWindow::line_edit_changed(QString text)
     } else {
         bt_enter->setEnabled(true);
     }
+}
+
+char *MainWindow::toChar(int data)
+{
+    char* intTemp = new char[4]{};
+    int i = data;
+    memcpy(intTemp, &i, 4);
+    return intTemp;
 }
 
 

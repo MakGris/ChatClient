@@ -27,6 +27,7 @@ private slots:
     void process_error();
 
 signals:
+    void authOkey();
 };
 
 #endif // PROCESSNETWORK_H

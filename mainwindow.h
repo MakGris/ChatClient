@@ -6,6 +6,9 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QGridLayout>
+#include <QListView>
+#include <QTextEdit>
+#include <QHBoxLayout>>
 #include "processnetwork.h"
 
 QT_BEGIN_NAMESPACE
@@ -26,10 +29,12 @@ private slots:
     void on_pb_exit_clicked();
     void on_pb_enter_clicked();
     void line_edit_changed(QString text);
+    void authComplete();
 
 
 private:
     Ui::MainWindow *ui;
+    //Окно авторизации
     QLabel      *lb_login           {};
     QLabel      *lb_password        {};
     QLineEdit   *le_login           {};
@@ -40,6 +45,18 @@ private:
     QGridLayout *mainLayout         {};
     ProcessNetwork *processNetwork  {};
     char* toChar(int data);
+    //Главное окно чата
+    QWidget     *mainChatWidget     {};
+    QGridLayout *mainChatLayout     {};
+    QHBoxLayout *sendHLayout        {};
+    QLineEdit   *le_sendMessage     {};
+    QListView   *lv_userList        {};
+    QTextEdit   *te_chatText        {};
+    QPushButton *bt_sendMessage     {};
+
+
+
+
 signals:
 
 };

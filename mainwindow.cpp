@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include <QDebug>
+#include <QMessageBox>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -37,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(bt_close, &QPushButton::clicked, this, &MainWindow::on_pb_exit_clicked);
     connect(bt_enter, &QPushButton::clicked, this, &MainWindow::on_pb_enter_clicked);
     processNetwork = new ProcessNetwork(this);
+    connect(processNetwork, &ProcessNetwork::authOkey, this, &MainWindow::authComplete);
 }
 
 MainWindow::~MainWindow()
@@ -77,6 +79,33 @@ void MainWindow::line_edit_changed(QString text)
     } else {
         bt_enter->setEnabled(true);
     }
+}
+
+void MainWindow::authComplete()
+{
+    const QSize btnSize = QSize(20, 20);
+    setWindowTitle("Окно чата");
+    setFixedSize(1200, 1000);
+    mainChatWidget = new QWidget(this);
+    setCentralWidget(mainChatWidget);
+    mainChatLayout = new QGridLayout(mainChatWidget);
+    sendHLayout = new QHBoxLayout(mainChatWidget);
+    lv_userList = new QListView(mainChatWidget);
+    te_chatText = new QTextEdit(mainChatWidget);
+    le_sendMessage = new QLineEdit(mainChatWidget);
+    bt_sendMessage = new QPushButton(mainChatWidget);
+
+    mainChatLayout->addWidget(lv_userList, 0, 0);
+    mainChatLayout->addWidget(te_chatText, 0, 1);
+    sendHLayout->addWidget(le_sendMessage);
+    sendHLayout->addWidget(bt_sendMessage);
+    mainChatLayout->addLayout(sendHLayout, 1, 0, 1, 2);
+
+
+    // showMaximized();
+    // QMessageBox msgBox;
+    // msgBox.setText("Authentification complete");
+    // msgBox.exec();
 }
 
 char *MainWindow::toChar(int data)
